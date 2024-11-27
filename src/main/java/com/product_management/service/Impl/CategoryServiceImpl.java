@@ -1,7 +1,9 @@
 package com.product_management.service.Impl;
 
-import java.util.List; 
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,13 @@ import com.product_management.service.CategoryService;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
+	private static  Logger LOGGER=LoggerFactory.getLogger(CategoryServiceImpl.class);
 	@Autowired
 	private CategoryRepo categoryRepo;
 
 	@Override
 	public Category addCategory(Category category) {
-
+		LOGGER.info("addCategory Execution Started ");
 		return categoryRepo.save(category);
 	}
 
