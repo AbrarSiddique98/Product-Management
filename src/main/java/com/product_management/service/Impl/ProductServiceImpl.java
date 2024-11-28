@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import com.product_management.service.ProductService;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+	private static  Logger LOGGER=LoggerFactory.getLogger(ProductServiceImpl.class);
 	@Autowired
 	private ProductRepo productRepo;
 
@@ -26,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product addProduct(Product product) {
+		LOGGER.info("addProduct Execution Started ");
 		int categoryId = product.getCategory().getCategoryId();
 
 		Category category = categoryRepo.findById(categoryId).get();
@@ -37,10 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product updateProduct(int id, Product product) throws Exception {
-//		Product product2 = productRepo.findById(id)
-//				.orElseThrow(() -> new Exception("Product Doesn't Exists with id : " + id));
-//		productRepo.delete(product2);
-
+		LOGGER.info("updateProduct Execution Started ");
 		Product existingProduct = productRepo.findById(product.getProductId()).get();
 		existingProduct.setProductName(product.getProductName());
 		existingProduct.setProductPrice(product.getProductPrice());
@@ -50,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public String deleteProductById(int id) throws Exception {
-
+		LOGGER.info("deleteProductById Execution Started ");
 		Product product2 = productRepo.findById(id)
 		.orElseThrow(() -> new Exception("Product Doesn't Exists with id : " + id));
 		productRepo.deleteProductIdFromProductCategoryTable(id);
@@ -61,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAllProduct() throws Exception {
+		LOGGER.info("getAllProduct Execution Started ");
 		List<Product> products = productRepo.findAll();
 
 		if (products == null) {
@@ -71,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product getProductById(int id) throws Exception {
-
+		LOGGER.info("getProductById Execution Started ");
 		return productRepo.findById(id).orElseThrow(() -> new Exception("Product Doesn't Exists with id : " + id));
 	}
 
